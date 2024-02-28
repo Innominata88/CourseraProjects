@@ -9,6 +9,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { Box, HStack } from "@chakra-ui/react";
 import useScrollPosition from "../hooks/useScrollPosition";
+import { transform } from "framer-motion";
 
 const socials = [
   {
@@ -34,9 +35,9 @@ const socials = [
 ];
 
 const Header = () => {
+  const previousScrollPositionRef = useRef(0);
   const scrollPosition = useScrollPosition();
-  const [previousScrollPosition, setPreviousScrollPosition] = useState(0);
-  const [translateY, setTranslateY] = useState(0);
+  const [transform, setTransform] = useState("translateY(0)");
 
   const handleClick = (anchor) => () => {
     const id = `${anchor}-section`;
@@ -50,9 +51,8 @@ const Header = () => {
   };
 
   useEffect(() =>  {
-    console.log(scrollPosition, previousScrollPosition);
-    setPreviousScrollPosition(scrollPosition);
-    setTranslateY(previousScrollPosition >= scrollPosition ? 0 : "-200px");
+    setTransform(`translateY(${previousScrollPositionRef.current < scrollPosition ? "-200px" : 0})`);
+    previousScrollPositionRef.current = scrollPosition;
   }, [scrollPosition]);
 
   return (
@@ -61,9 +61,9 @@ const Header = () => {
       top={0}
       left={0}
       right={0}
-      translateY={translateY}
+      translateY={0}
       zIndex={50}
-      transform="auto"
+      transform={transform}
       transitionProperty="transform"
       transitionDuration=".3s"
       transitionTimingFunction="ease-in-out"
