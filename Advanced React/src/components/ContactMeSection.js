@@ -79,7 +79,7 @@ const LandingSection = () => {
                   onBlur={formik.handleBlur}
                   value={formik.values.firstName}
                 />
-                <FormErrorMessage> {formik.errors.firstName} </FormErrorMessage>
+                <FormErrorMessage>{formik.touched.firstName && formik.errors.firstName} </FormErrorMessage>
               </FormControl>
               <FormControl isInvalid={formik.touched.email && formik.errors.email}>
                 <FormLabel htmlFor="email">Email Address</FormLabel>
@@ -91,7 +91,7 @@ const LandingSection = () => {
                   onBlur={formik.handleBlur}
                   value={formik.values.email}
                 />
-                <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
+                <FormErrorMessage>{formik.touched.email && formik.errors.email}</FormErrorMessage>
               </FormControl>
               <FormControl>
                 <FormLabel htmlFor="type">Type of enquiry</FormLabel>
@@ -118,9 +118,9 @@ const LandingSection = () => {
                   onBlur={formik.handleBlur}
                   value={formik.values.comment}
                 />
-                <FormErrorMessage>{formik.errors.comment}</FormErrorMessage>
+                <FormErrorMessage>{formik.touched.comment && formik.errors.comment}</FormErrorMessage>
               </FormControl>
-              <Button type="submit" colorScheme="purple" width="full" isLoading={isLoading}>
+              <Button type="submit" colorScheme="purple" width="full" isLoading={isLoading} isDisabled={!formik.isValid}>
                 Submit
               </Button>
             </VStack>

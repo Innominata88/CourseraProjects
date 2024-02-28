@@ -13,22 +13,27 @@ import { transform } from "framer-motion";
 
 const socials = [
   {
+    key: "Email",
     icon: faEnvelope,
     url: "mailto: hello@example.com",
   },
   {
+    key: "GitHub",
     icon: faGithub,
     url: "https://github.com",
   },
   {
+    key: "LinkedIn",
     icon: faLinkedin,
     url: "https://www.linkedin.com",
   },
   {
+    key: "Medium",
     icon: faMedium,
     url: "https://medium.com",
   },
   {
+    key: "StackOverflow",
     icon: faStackOverflow,
     url: "https://stackoverflow.com",
   },
@@ -79,7 +84,7 @@ const Header = () => {
           <nav>
             {/* Add social media links based on the `socials` data */}
             <HStack spacing={8}>
-              {socials.map((social) => <a href={social.url}><FontAwesomeIcon icon={social.icon} size="2x" /></a>)}
+              {socials.map((social) => <a href={social.url} key={social.key}><FontAwesomeIcon icon={social.icon} size="2x" /></a>)}
             </HStack>
           </nav>
           <nav>
