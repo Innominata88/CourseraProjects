@@ -9,34 +9,40 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { Box, HStack } from "@chakra-ui/react";
 import useScrollPosition from "../hooks/useScrollPosition";
+import { transform } from "framer-motion";
 
 const socials = [
   {
+    key: "Email",
     icon: faEnvelope,
     url: "mailto: hello@example.com",
   },
   {
+    key: "GitHub",
     icon: faGithub,
     url: "https://github.com",
   },
   {
+    key: "LinkedIn",
     icon: faLinkedin,
     url: "https://www.linkedin.com",
   },
   {
+    key: "Medium",
     icon: faMedium,
     url: "https://medium.com",
   },
   {
+    key: "StackOverflow",
     icon: faStackOverflow,
     url: "https://stackoverflow.com",
   },
 ];
 
 const Header = () => {
+  const previousScrollPositionRef = useRef(0);
   const scrollPosition = useScrollPosition();
-  const [previousScrollPosition, setPreviousScrollPosition] = useState(0);
-  const [translateY, setTranslateY] = useState(0);
+  const [transform, setTransform] = useState("translateY(0)");
 
   const handleClick = (anchor) => () => {
     const id = `${anchor}-section`;
@@ -50,9 +56,8 @@ const Header = () => {
   };
 
   useEffect(() =>  {
-    console.log(scrollPosition, previousScrollPosition);
-    setPreviousScrollPosition(scrollPosition);
-    setTranslateY(previousScrollPosition >= scrollPosition ? 0 : "-200px");
+    setTransform(`translateY(${previousScrollPositionRef.current < scrollPosition ? "-200px" : 0})`);
+    previousScrollPositionRef.current = scrollPosition;
   }, [scrollPosition]);
 
   return (
@@ -61,9 +66,9 @@ const Header = () => {
       top={0}
       left={0}
       right={0}
-      translateY={translateY}
+      translateY={0}
       zIndex={50}
-      transform="auto"
+      transform={transform}
       transitionProperty="transform"
       transitionDuration=".3s"
       transitionTimingFunction="ease-in-out"
@@ -79,7 +84,7 @@ const Header = () => {
           <nav>
             {/* Add social media links based on the `socials` data */}
             <HStack spacing={8}>
-              {socials.map((social) => <a href={social.url}><FontAwesomeIcon icon={social.icon} size="2x" /></a>)}
+              {socials.map((social) => <a href={social.url} key={social.key}><FontAwesomeIcon icon={social.icon} size="2x" /></a>)}
             </HStack>
           </nav>
           <nav>
